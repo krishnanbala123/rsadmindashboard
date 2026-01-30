@@ -1,0 +1,79 @@
+.login-wrapper {
+  height: 100vh;
+  width: 100%;
+  background-image: url('/bricks-bg.jpg'); /* public folder */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.login-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.login-card {
+  position: relative;
+  z-index: 1;
+  background: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  width: 320px;
+  text-align: center;
+}
+
+.login-card h2 {
+  margin-bottom: 10px;
+}
+
+.google-btn {
+  margin-top: 20px;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  background: #db4437;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.google-btn:hover {
+  background: #c1351d;
+}
+.input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.login-btn {
+  width: 100%;
+  margin-top: 15px;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  background: #222;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.login-btn:hover {
+  background: #000;
+}
+
+.divider {
+  margin: 20px 0;
+  font-size: 12px;
+  color: #888;
+}

@@ -1,0 +1,398 @@
+// 'use client';
+// import { useEffect, useState } from 'react';
+// import './dashboard.css';
+
+// export default function DashboardPage() {
+//  const [stats, setStats] = useState({
+//   totalProducts: 0,
+//   totalOrders: 0,
+//   pendingOrders: 0,
+//   totalRevenue: 0
+// });
+
+//   const [recentOrders, setRecentOrders] = useState([]);
+
+//   // useEffect(() => {
+//   //   const fetchData = async () => {
+//   //     const statsRes = await fetch('/api/dashboard');
+//   //     const statsData = await statsRes.json();
+//   //     setStats(statsData);
+
+//   //     const ordersRes = await fetch('/api/orders/recent');
+//   //     const ordersData = await ordersRes.json();
+//   //     setRecentOrders(ordersData);
+//   //   };
+
+//   //   fetchData();
+//   // }, []);
+
+//   useEffect(() => {
+//   let isMounted = true;
+
+//   const fetchData = async () => {
+//     try {
+//       const res = await fetch('/api/dashboard', {
+//         cache: 'no-store'
+//       });
+
+//       const data = await res.json();
+//       if (isMounted) {
+//         setStats(data);
+//         setRecentOrders(data.recentOrders || []);
+//       }
+//     } catch (err) {
+//       console.error('Dashboard fetch error:', err);
+//     }
+//   };
+
+//   // 🚀 initial load
+//   fetchData();
+
+//   // 🔁 auto refresh every 15 seconds
+//   const interval = setInterval(fetchData, 15000);
+
+//   return () => {
+//     isMounted = false;
+//     clearInterval(interval);
+//   };
+// }, []);
+
+
+//   return (
+//     <div className="dashboard">
+//       <h2>Dashboard</h2>
+
+//       {/* SUMMARY CARDS */}
+//       <div className="dashboard-cards">
+//         <div className="card">
+//           <p>Total Products</p>
+//           <h3>{stats.totalProducts}</h3>
+//         </div>
+
+//         <div className="card">
+//           <p>Total Orders</p>
+//           <h3>{stats.totalOrders}</h3>
+//         </div>
+
+//         <div className="card">
+//           <p>Pending Orders</p>
+//           <h3>{stats.pendingOrders}</h3>
+//         </div>
+
+//         <div className="card">
+//           <p>Total Revenue</p>
+//           <h3>₹{stats.totalRevenue}</h3>
+//         </div>
+//       </div>
+
+//       {/* RECENT ORDERS */}
+//       {/* <div className="recent-orders">
+//         <div className="recent-header">
+//           <h3>Recent Orders</h3>
+//         </div>
+
+//         {recentOrders.length === 0 ? (
+//           <p className="empty">No orders yet</p>
+//         ) : (
+//           <table>
+//             <thead>
+//               <tr>
+//                 <th>Customer</th>
+//                 <th>Amount</th>
+//                 <th>Status</th>
+//               </tr>
+//             </thead>
+//             <tbody>
+//               {recentOrders.map(order => (
+//                 <tr key={order._id}>
+//                   <td>{order.customerName}</td>
+//                   <td>₹{order.totalAmount || 0}</td>
+//                   <td>
+//                     <span
+//                       className={`status ${
+//                         order.status === 'pending'
+//                           ? 'pending'
+//                           : 'delivered'
+//                       }`}
+//                     >
+//                       {order.status}
+//                     </span>
+//                   </td>
+//                 </tr>
+//               ))}
+//             </tbody>
+//           </table>
+//         )}
+//       </div> */}
+//        <div className="recent-orders">
+//         <h3>Recent Orders</h3>
+
+//         {recentOrders.length === 0 ? (
+//           <p>No orders yet</p>
+//         ) : (
+//           <table>
+//             <thead>
+//               <tr>
+//                 <th>Order ID</th>
+//                 <th>Name</th>
+//                 <th>Phone</th>
+//                 <th>Paid</th>
+//                 <th>Status</th>
+//               </tr>
+//             </thead>
+
+//            <tbody>
+//   {recentOrders.map(order => (
+//     <tr key={order._id}>
+//       <td data-label="Order ID">{order.orderId}</td>
+//       <td data-label="Name">{order.name}</td>
+//       <td data-label="Phone">{order.phone}</td>
+//       <td data-label="Paid">₹{order.paidAmount}</td>
+//       <td data-label="Status">
+//         <span
+//           className={`status ${
+//             order.paymentStatus === 'completed'
+//               ? 'completed'
+//               : 'pending'
+//           }`}
+//         >
+//           {order.paymentStatus === 'completed'
+//             ? 'Completed'
+//             : 'Pending'}
+//         </span>
+//       </td>
+//     </tr>
+//   ))}
+// </tbody>
+
+//           </table>
+//         )}
+//       </div>
+
+//     </div>
+//   );
+// }
+
+
+'use client';
+import { useEffect, useState } from 'react';
+import './dashboard.css';
+
+export default function DashboardPage() {
+  const [stats, setStats] = useState({
+    totalProducts: 0,
+    totalOrders: 0,
+    pendingOrders: 0,
+    totalRevenue: 0
+  });
+
+  const [recentOrders, setRecentOrders] = useState([]);
+
+  const [users, setUsers] = useState([]);
+
+  const fetchUsers = async () => {
+  const res = await fetch('/api/users', { cache: 'no-store' });
+  const data = await res.json();
+  setUsers(Array.isArray(data) ? data : []);
+};
+
+  const [userStats, setUserStats] = useState({
+  totalUsers: 0,
+  admins: 0,
+  todayActiveUsers: 0
+});
+
+const [recentLogins, setRecentLogins] = useState([]);
+
+// useEffect(() => {
+//   fetch('/api/admin/dashboard')
+//     .then(res => res.json())
+//     .then(data => {
+//       setUserStats(data);
+//       setRecentLogins(data.recentLogins);
+//     });
+// }, []);
+
+
+useEffect(() => {
+  const fetchDashboard = async () => {
+    try {
+      const res = await fetch('/api/admin/dashboard', {
+        cache: 'no-store'
+      });
+
+      if (!res.ok) {
+        console.error('Dashboard API failed');
+        return;
+      }
+
+      const text = await res.text();
+      const data = text ? JSON.parse(text) : {};
+
+      setUserStats(data);
+      setRecentLogins(data.recentLogins || []);
+    } catch (err) {
+      console.error('Dashboard fetch error:', err);
+    }
+  };
+
+  fetchDashboard();
+}, []);
+
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchData = async () => {
+      try {
+        const res = await fetch('/api/dashboard', {
+          cache: 'no-store'
+        });
+
+        if (!res.ok) return;
+
+        const data = await res.json();
+
+        if (isMounted) {
+          setStats({
+            totalProducts: data.totalProducts,
+            totalOrders: data.totalOrders,
+            pendingOrders: data.pendingOrders,
+            totalRevenue: data.totalRevenue
+          });
+
+          // 🔥 latest 5 orders always replace old ones
+          setRecentOrders(data.recentOrders || []);
+        }
+      } catch (err) {
+        console.error('Dashboard fetch error:', err);
+      }
+    };
+
+    // 🚀 initial load
+    fetchData();
+
+    // 🔁 AUTO REFRESH EVERY 5 SECONDS (KEY FIX)
+    const interval = setInterval(fetchData, 5000);
+
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
+  }, []);
+
+  return (
+    <div className="dashboard">
+      <h2>Dashboard</h2>
+
+      {/* SUMMARY */}
+      <div className="dashboard-cards">
+        <div className="card">
+          <p>Total Products</p>
+          <h3>{stats.totalProducts}</h3>
+        </div>
+
+        <div className="card">
+          <p>Total Orders</p>
+          <h3>{stats.totalOrders}</h3>
+        </div>
+
+        <div className="card">
+          <p>Pending Orders</p>
+          <h3>{stats.pendingOrders}</h3>
+        </div>
+
+        <div className="card">
+          <p>Total Revenue</p>
+          <h3>₹{stats.totalRevenue}</h3>
+        </div>
+
+{/* <div className="card">
+  <p>Total Users</p>
+  <h3>{users.length}</h3>
+</div> */}
+<div className="card">
+  <p>Total Users</p>
+  <h3>{userStats.totalUsers}</h3>
+</div>
+      </div>
+
+      {/* RECENT ORDERS */}
+      <div className="recent-orders">
+        <h3>Recent Orders (Latest 5)</h3>
+
+        {recentOrders.length === 0 ? (
+          <p>No orders yet</p>
+        ) : (
+          <table>
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Name</th>
+                <th>Phone</th>
+                 <th>Date</th>
+                <th>Paid</th>               
+                <th>Status</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {recentOrders.map(order => (
+                <tr key={order._id}>
+                  <td data-label="Order ID">{order.orderId}</td>
+                  <td data-label="Name">{order.name}</td>
+                  <td data-label="Phone">{order.phone}</td>
+                                    <td data-label="Date">
+                                   {new Date(order.createdAt).toLocaleDateString()}
+                           </td>
+                  <td data-label="Paid">₹{order.paidAmount}</td>
+                  <td data-label="Status">
+                    <span
+                      className={`status ${
+                        order.paymentStatus === 'completed'
+                          ? 'completed'
+                          : 'pending'
+                      }`}
+                    >
+                      {order.paymentStatus === 'completed'
+                        ? 'Completed'
+                        : 'Pending'}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+
+          </table>
+        )}
+      </div>
+
+{/* <div className='recent-orders'>
+<h3>Recent User Logins</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th>Last Login</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {recentLogins.map(u => (
+      <tr key={u._id}>
+        <td>{u.name}</td>
+        <td>{u.email}</td>
+        <td>{u.role}</td>
+        <td>{new Date(u.lastLogin).toLocaleString()}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+</div> */}
+
+    </div>
+  );
+}

@@ -1,0 +1,134 @@
+/* PAGE */
+.history-page {
+  padding: 20px;
+  background: #f9fafb;
+}
+
+.history-page h2 {
+  margin-bottom: 5px;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+/* FILTER BAR */
+.filters {
+   display: flex;
+  justify-content: flex-end;   /* 🔥 right side */
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.filters input,
+.filters select {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  min-width: 150px;
+}
+
+/* MONTH TOTAL */
+.month-total {
+  margin-bottom: 10px;
+  font-size: 15px;
+  background: #eef2ff;
+  padding: 10px;
+  border-radius: 6px;
+  width: fit-content;
+}
+
+/* TABLE WRAPPER */
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* TABLE */
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  min-width: 600px;
+}
+
+.history-table thead {
+  background: #f1f3f9;
+  color: black;
+}
+
+.history-table th,
+.history-table td {
+  padding: 10px 12px;
+  border: 1px solid #e5e7eb;
+  text-align: left;
+  font-size: 14px;
+}
+
+.history-table tbody tr:nth-child(even) {
+  background: #f9fafb;
+}
+
+.history-table tbody tr:hover {
+  background: #eef2ff;
+}
+
+/* EMPTY ROW */
+.history-table td[colspan] {
+  text-align: center;
+  padding: 20px;
+  font-style: italic;
+}
+
+/* ===================== */
+/* 📱 MOBILE RESPONSIVE */
+/* ===================== */
+@media (max-width: 768px) {
+  .filters {
+     justify-content: flex-start; /* mobile la normal */
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .filters input,
+  .filters select {
+    width: 100%;
+  }
+
+  .history-table {
+    min-width: unset;
+  }
+
+  .history-table thead {
+    display: none;
+  }
+
+  .history-table tr {
+    display: block;
+    margin-bottom: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 8px;
+    background: #fff;
+  }
+
+  .history-table td {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 8px;
+    border: none;
+    border-bottom: 1px solid #eee;
+    font-size: 13px;
+  }
+
+  .history-table td:last-child {
+    border-bottom: none;
+  }
+
+  .history-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #374151;
+  }
+}

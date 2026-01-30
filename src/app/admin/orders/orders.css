@@ -1,0 +1,354 @@
+/* =========================
+   PAGE BASE
+========================= */
+.orders-page {
+  padding: 20px;
+  background: #f5f7fb;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* =========================
+   HEADER
+========================= */
+.orders-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.orders-header h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.search-input {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  min-width: 220px;
+}
+
+/* =========================
+   TABLE WRAPPER
+========================= */
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* =========================
+   TABLE (DESKTOP)
+========================= */
+.orders-table {
+  width: 122%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.orders-table th,
+.orders-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+.orders-table th {
+  background: #f1f3f9;
+  font-weight: 600;
+  color: #333;
+}
+
+.orders-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* =========================
+   STATUS COLORS
+========================= */
+.balance-red {
+  color: #d32f2f;
+  font-weight: 600;
+}
+
+.balance-green {
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+.paid {
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+.pending {
+  color: #f57c00;
+  font-weight: 600;
+}
+
+.verified {
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+.not-verified {
+  color: #d32f2f;
+  font-weight: 600;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+.verify-btn {
+  padding: 6px 12px;
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.verify-btn:hover {
+  background: #125aa0;
+}
+
+.map-btn {
+  padding: 8px 10px;
+  background: #2e7d32;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 13px;
+  width: 80px; 
+}
+
+.map-btn:hover {
+  background: #1b5e20;
+}
+/* =========================
+   MOBILE RESPONSIVE (IMPORTANT)
+========================= */
+@media (max-width: 768px) {
+
+  .orders-table thead {
+    display: none;
+  }
+
+  .orders-table,
+  .orders-table tbody,
+  .orders-table tr,
+  .orders-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .orders-table tbody {
+    display: block;
+  }
+
+  .orders-table tr {
+    background: #fff;
+    margin-bottom: 16px;
+    border-radius: 10px;
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+  }
+
+  .orders-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 6px 0;
+    border: none;
+    font-size: 14px;
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  .orders-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #555;
+    padding-right: 10px;
+    min-width: 120px;
+  }
+
+  .verify-btn,
+  .map-btn {
+    margin-top: 6px;
+  }
+}
+
+/* =========================
+   ACTION BUTTONS – CLEAN UI
+   ========================= */
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: nowrap;              /* 🔥 small screen wrap */
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row; 
+}
+
+/* COMMON BUTTON STYLE */
+.action-buttons button{
+  padding: 6px 12px;
+  font-size: 13px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+/* VERIFY */
+.verify-btn {
+  background: #1976d2;
+  color: #fff;
+}
+.verify-btn:hover {
+  background: #125aa3;
+}
+
+/* UPDATE PAYMENT */
+.pay-btn {
+  background: #6a1b9a;
+  color: #fff;
+}
+.pay-btn:hover {
+  background: #4a1370;
+}
+
+/* INVOICE */
+.invoice-btn {
+  background: #2e7d32;
+  color: #fff;
+}
+.invoice-btn:hover {
+  background: #1b5e20;
+}
+
+/* DELETE */
+.delete-btn {
+  background: #d32f2f;
+  color: #fff;
+}
+.delete-btn:hover {
+  background: #9a0007;
+}
+
+/* =========================
+   TABLET (≤1024px)
+   ========================= */
+@media (max-width: 1024px) {
+  .action-buttons {
+    gap: 6px;
+  }
+
+  .action-buttons button {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+}
+
+/* =========================
+   MOBILE (≤768px)
+   ========================= */
+@media (max-width: 768px) {
+  .action-buttons {
+    flex-direction: column;     /* 🔥 vertical stack */
+    align-items: stretch;
+  }
+
+  .action-buttons button {
+    width: 100%;                /* 🔥 full width */
+    text-align: center;
+  }
+}
+
+/* =========================
+   SMALL MOBILE (≤480px)
+   ========================= */
+@media (max-width: 480px) {
+  .action-buttons button {
+    font-size: 12px;
+    padding: 8px;
+  }
+}
+
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #fff;
+  padding: 20px;
+  width: 320px;
+  border-radius: 10px;
+}
+
+.modal input {
+  width: 100%;
+  padding: 8px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal-actions .cancel {
+  background: red;
+  padding: 6px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+}
+.modal-actions .cancel:hover{
+   background-color: #d32f2f;
+}
+.modal-actions .save{
+   background-color: green;
+   color: white;
+     padding: 6px;
+  border: none;
+  border-radius: 5px;
+}
+.modal-actions .save:hover{
+  background-color: #1b5e20;
+}
+
+
+
+#devtools-indicator{
+  display: none !important;
+}
+
+#next-logo{
+  display: none !important;
+  visibility: hidden !important;
+}

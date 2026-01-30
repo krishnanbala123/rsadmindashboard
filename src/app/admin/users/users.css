@@ -1,0 +1,127 @@
+/* PAGE */
+.users-page {
+  padding: 20px;
+  background: #f8f9fb;
+  min-height: 100vh;
+}
+
+/* HEADER */
+.users-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  gap: 12px;
+}
+
+.users-header h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* FILTERS (RIGHT SIDE) */
+.filters {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filters input,
+.filters select {
+  padding: 7px 12px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+  background: #fff;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.filters input {
+  width: 180px;
+}
+
+.filters select {
+  width: 120px;
+}
+
+.filters input:focus,
+.filters select:focus {
+  border-color: #6a1b9a;
+  box-shadow: 0 0 0 2px rgba(106, 27, 154, 0.15);
+}
+
+/* TABLE WRAPPER */
+.table-wrapper {
+  background: #fff;
+  border-radius: 10px;
+  overflow-x: auto;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+/* TABLE */
+.table-wrapper table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px;
+}
+
+.table-wrapper thead {
+  background: #f1f1f6;
+}
+
+.table-wrapper th {
+  padding: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+  color: #555;
+  white-space: nowrap;
+}
+
+.table-wrapper td {
+  padding: 12px;
+  font-size: 14px;
+  color: #333;
+  border-bottom: 1px solid #eee;
+  white-space: nowrap;
+}
+
+/* ROW HOVER */
+.table-wrapper tbody tr:hover {
+  background: #fafafa;
+}
+
+/* ROLE BADGE */
+.table-wrapper td:nth-child(4) {
+  text-transform: capitalize;
+  font-weight: 500;
+}
+
+/* EMPTY STATE */
+.table-wrapper tbody tr td[colspan] {
+  text-align: center;
+  padding: 20px;
+  color: #777;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .users-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .filters {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .filters input,
+  .filters select {
+    width: 100%;
+  }
+}
