@@ -34,7 +34,7 @@ const UserSchema = new mongoose.Schema(
     role: {
       type: String,
       enum: ['user', 'admin'],
-      default: 'user'
+      default: 'admin'
     },
 
     // 🕒 LAST LOGIN TRACK (IMPORTANT FOR DASHBOARD)

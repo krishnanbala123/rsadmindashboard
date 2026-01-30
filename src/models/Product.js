@@ -6,6 +6,8 @@ const ProductSchema = new mongoose.Schema(
 
     description: { type: String, required: true },
 
+    //  longdescription: { type: String, required: true },
+
     type: {
       type: String,
       enum: [
