@@ -35,7 +35,7 @@ export default function OrdersPage() {
   };
 
   useEffect(() => {
-    fetchOrders();
+    fetchOrders()
   }, []);
 
   // setInterval(() =>{
@@ -91,20 +91,123 @@ RS Bricks team will contact you shortly
     );
   };
 
-  // 🗑 DELETE (ONLY UI REMOVE – DB SAFE)
   const deleteOrder = async (id) => {
-    const ok = confirm('Delete completed order?');
-    if (!ok) return;
+  const ok = confirm('Payment completed. Move order to history?');
+  if (!ok) return;
 
-    const res = await fetch(`/api/orders/${id}`, { method: 'DELETE' });
+  const res = await fetch(`/api/orders/${id}`, {
+    method: 'DELETE'
+  });
 
-    if (!res.ok) {
-      alert('Delete failed');
-      return;
-    }
+  if (!res.ok) {
+    alert('Move to history failed');
+    return;
+  }
 
-    setOrders(prev => prev.filter(o => o._id !== id));
-  };
+  // UI remove
+  setOrders(prev => prev.filter(o => o._id !== id));
+};
+
+
+//  const handleDeleteOrder = async (order) => {
+
+//   // 🔴 NOT VERIFIED → PERMANENT DELETE
+//   if (!order.verified) {
+//     const ok = confirm(
+//       `⚠️ WARNING!\n\n` +
+//       `This order is NOT verified.\n` +
+//       `It will be permanently deleted.\n\n` +
+//       `Continue?`
+//     );
+//     if (!ok) return;
+
+//     const res = await fetch(
+//       `/api/orders/${order._id}?mode=permanent`,
+//       { method: 'DELETE' }
+//     );
+
+//     if (!res.ok) {
+//       alert('Permanent delete failed');
+//       return;
+//     }
+
+//     setOrders(prev => prev.filter(o => o._id !== order._id));
+//     return;
+//   }
+
+//   // 🟢 VERIFIED + COMPLETED → MOVE TO HISTORY
+//   const ok = confirm(
+//     `Payment completed ✅\n\n` +
+//     `Move this order to Order History?`
+//   );
+//   if (!ok) return;
+
+//   const res = await fetch(
+//     `/api/orders/${order._id}?mode=history`,
+//     { method: 'DELETE' }
+//   );
+
+//   if (!res.ok) {
+//     alert('Move to history failed');
+//     return;
+//   }
+
+//   setOrders(prev => prev.filter(o => o._id !== order._id));
+// };
+
+
+//   const handleDeleteOrder = async (order) => {
+
+//   // 🔴 NOT VERIFIED → PERMANENT DELETE
+//   if (!order.verified) {
+//     const ok = confirm(
+//       `⚠️ WARNING!\n\n` +
+//       `This order is NOT verified.\n` +
+//       `This will permanently delete the order.\n\n` +
+//       `Do you want to continue?`
+//     );
+
+//     if (!ok) return;
+
+//     const res = await fetch(`/api/orders/${order._id}`, {
+//       method: 'DELETE',
+//       headers: { 'Content-Type': 'application/json' },
+//       body: JSON.stringify({ type: 'permanent' })
+//     });
+
+//     if (!res.ok) {
+//       alert('Permanent delete failed');
+//       return;
+//     }
+
+//     // UI remove
+//     setOrders(prev => prev.filter(o => o._id !== order._id));
+//     return;
+//   }
+
+//   // 🟢 VERIFIED + PAYMENT COMPLETED → MOVE TO HISTORY
+//   const ok = confirm(
+//     `✅ Payment completed\n\n` +
+//     `This order will be moved to Order History.\n` +
+//     `Do you want to continue?`
+//   );
+
+//   if (!ok) return;
+
+//   const res = await fetch(`/api/orders/${order._id}`, {
+//     method: 'DELETE',
+//     headers: { 'Content-Type': 'application/json' },
+//     body: JSON.stringify({ type: 'history' })
+//   });
+
+//   if (!res.ok) {
+//     alert('Move to history failed');
+//     return;
+//   }
+
+//   setOrders(prev => prev.filter(o => o._id !== order._id));
+// };
+
 
   // 📍 VIEW MAP
   const openMap = (loc) => {
@@ -168,9 +271,9 @@ RS Bricks team will contact you shortly
                 <td data-label="Name">{order.name}</td>
                 <td data-label="Phone">{order.phone}</td>
                 <td data-label="Date">{new Date(order.createdAt).toLocaleDateString()}</td>                           
-                <td data-label="Brick Type"> {order.type}</td>
-                <td data-label="Rate / Brick">₹{order.brickRate}</td>
-                <td data-label="Bricks">{order.noOfBricks}</td>
+                <td data-label="Brick Type"> {order.items[0].type}</td>
+                <td data-label="Rate / Brick">₹{order.items[0].rate}</td>
+                <td data-label="Bricks">{order.items[0].quantity}</td>
                 <td data-label="Total">₹{order.totalAmount}</td>
                 <td data-label="Paid">₹{order.paidAmount}</td>
 

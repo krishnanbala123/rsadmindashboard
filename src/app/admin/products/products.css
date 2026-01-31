@@ -215,13 +215,14 @@
 }
 
 .drawer-header .delete{
-  padding: 8px;
+  padding: 4px 8px 4px 8px;
   border-radius: 5px;
-  background-color: red;
-  border-color: black;
+  color: red;
+  border-color: 1px solid black;
 }
 .drawer-header .delete:hover{
-  background-color: #f66567;
+  background-color: #f0060a;
+  color: white;
 }
 
 .drawer.open {
@@ -302,4 +303,11 @@
   .drawer.open {
     right: 0;
   }
+}
+
+.sep{
+  display: flex;
+  justify-content: space-between;
+  padding: 30px;
+  align-items: center;
 }

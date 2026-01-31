@@ -26,10 +26,7 @@ export async function GET() {
     await connectDB();
 
     const orders = await Order.find({
-      $or: [
-        { movedToHistory: false },
-        { movedToHistory: { $exists: false } } // 🔥 OLD ORDERS FIX
-      ]
+      movedToHistory: { $ne: true }
     }).sort({ createdAt: -1 });
 
     return NextResponse.json(orders);
@@ -39,4 +36,3 @@ export async function GET() {
     return NextResponse.json([], { status: 500 });
   }
 }
-

@@ -25,7 +25,8 @@ export async function POST(req) {
 
     const product = await Product.create({
       name: formData.get('name'),
-      description: formData.get('description'),
+      shortDescription: formData.get('shortDescription'),
+      longDescription: formData.get('longDescription'),
       type: formData.get('type'),
       price: Number(formData.get('price')),
       // offer: Number(formData.get('offer') || 0),

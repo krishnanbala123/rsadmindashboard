@@ -4,9 +4,9 @@ const ProductSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
 
-    description: { type: String, required: true },
+    shortDescription: { type: String, required: true },
 
-    //  longdescription: { type: String, required: true },
+    longDescription: { type: String, required: true },
 
     type: {
       type: String,
