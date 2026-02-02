@@ -143,7 +143,7 @@ RS Bricks team will contact you shortly
               <th>Order ID</th>
               <th>Name</th>
               <th>Phone</th>
-              <th>Date</th>
+              <th>Date&Time</th>
               <th>Brick Type</th>      
               <th>Rate / Brick</th>
               <th>Bricks</th>
@@ -170,7 +170,13 @@ RS Bricks team will contact you shortly
                 <td data-label="Order ID">{order.orderId}</td>
                 <td data-label="Name">{order.name}</td>
                 <td data-label="Phone">{order.phone}</td>
-                <td data-label="Date">{new Date(order.createdAt).toLocaleDateString()}</td>                           
+                {/* <td data-label="Date">{new Date(order.createdAt).toLocaleDateString()}</td> */}
+                <td data-label="Date">
+  {new Date(order.createdAt).toLocaleString("en-IN", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  })}
+</td>
                 <td data-label="Brick Type"> {order.items[0].type}</td>
                 <td data-label="Rate / Brick">₹{order.items[0].rate}</td>
                 <td data-label="Bricks">{order.items[0].quantity}</td>
