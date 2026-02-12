@@ -2,6 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import './order-history.css';
+import { DataGrid } from '@mui/x-data-grid';
+import Paper from '@mui/material/Paper';
+
 
 export default function OrderHistoryPage() {
   const [orders, setOrders] = useState([]);
@@ -92,7 +95,7 @@ export default function OrderHistoryPage() {
       </div>
 
       {/* 📋 TABLE */}
-      <div className="table-wrapper">
+      {/* <div className="table-wrapper">
         <table className="history-table">
           <thead>
             <tr>
@@ -124,7 +127,121 @@ export default function OrderHistoryPage() {
             ))}
           </tbody>
         </table>
-      </div>
+      </div> */}
+
+{/* <div className="table-wrapper">
+  <Paper sx={{ height: 500, width: '100%', borderRadius: 3 }}>
+    <DataGrid
+      rows={filteredOrders.map((o) => ({
+        id: o._id,
+        orderId: o.orderId,
+        name: o.name,
+        phone: o.phone,
+        totalAmount: o.totalAmount,
+        completedAt: new Date(o.updatedAt).toLocaleDateString(),
+      }))}
+
+      columns={[
+        { field: 'orderId', headerName: 'Order ID', flex: 1 },
+        { field: 'name', headerName: 'Name', flex: 1 },
+        { field: 'phone', headerName: 'Phone', flex: 1 },
+        {
+          field: 'totalAmount',
+          headerName: 'Total',
+          flex: 1,
+          renderCell: (params) => `₹${params.value}`,
+        },
+        { field: 'completedAt', headerName: 'Completed At', flex: 1 },
+      ]}
+
+      pageSizeOptions={[5, 10, 20]}
+      initialState={{
+        pagination: { paginationModel: { pageSize: 5, page: 0 } },
+      }}
+
+      disableRowSelectionOnClick
+      getRowHeight={() => 70}
+
+      sx={{
+        border: 0,
+
+        '& .MuiDataGrid-columnHeaders': {
+          backgroundColor: '#f8f9fa',
+          fontWeight: 600,
+        },
+
+        '& .MuiDataGrid-cell': {
+          display: 'flex',
+          alignItems: 'center',
+          padding: '0 16px',
+        },
+
+        '& .MuiDataGrid-columnSeparator': {
+          display: 'none',
+        },
+      }}
+    />
+  </Paper>
+</div> */}
+
+<Paper sx={{ width: '100%', borderRadius: 3 }}>
+  <DataGrid
+    autoHeight
+    getRowHeight={() => 70}
+
+    rows={filteredOrders.map((o) => ({
+      id: o._id,
+      orderId: o.orderId,
+      name: o.name,
+      phone: o.phone,
+      totalAmount: o.totalAmount,
+      completedAt: new Date(o.updatedAt).toLocaleDateString(),
+    }))}
+
+    columns={[
+      { field: 'orderId', headerName: 'Order ID', flex: 1, minWidth: 140 },
+      { field: 'name', headerName: 'Name', flex: 1, minWidth: 150 },
+      { field: 'phone', headerName: 'Phone', flex: 1, minWidth: 140 },
+      {
+        field: 'totalAmount',
+        headerName: 'Total',
+        flex: 1,
+        minWidth: 120,
+        renderCell: (params) => `₹${params.value}`,
+      },
+      { field: 'completedAt', headerName: 'Completed At', flex: 1.2, minWidth: 160 },
+    ]}
+
+    pageSizeOptions={[5, 10, 20]}
+    initialState={{
+      pagination: { paginationModel: { pageSize: 5, page: 0 } },
+    }}
+
+    disableRowSelectionOnClick
+
+    sx={{
+      border: 0,
+
+      '& .MuiDataGrid-columnHeaders': {
+        backgroundColor: '#f8f9fa',
+        fontWeight: 600,
+      },
+
+      '& .MuiDataGrid-cell': {
+        display: 'flex',
+        alignItems: 'center',
+        padding: '0 14px',
+      },
+
+      '& .MuiDataGrid-columnSeparator': {
+        display: 'none',
+      },
+    }}
+  />
+</Paper>
+
+
+
     </div>
   );
 }

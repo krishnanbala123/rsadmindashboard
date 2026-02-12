@@ -37,15 +37,15 @@
 /* =========================
    TABLE WRAPPER
 ========================= */
-.table-wrapper {
+/* .table-wrapper {
   width: 100%;
   overflow-x: auto;
-}
+} */
 
 /* =========================
    TABLE (DESKTOP)
 ========================= */
-.orders-table {
+/* .orders-table {
   width: 122%;
   border-collapse: collapse;
   background: #fff;
@@ -70,12 +70,12 @@
 
 .orders-table tr:last-child td {
   border-bottom: none;
-}
+} */
 
 /* =========================
    STATUS COLORS
 ========================= */
-.balance-red {
+/* .balance-red {
   color: #d32f2f;
   font-weight: 600;
 }
@@ -103,12 +103,12 @@
 .not-verified {
   color: #d32f2f;
   font-weight: 600;
-}
+} */
 
 /* =========================
    BUTTONS
 ========================= */
-.verify-btn {
+/* .verify-btn {
   padding: 6px 12px;
   background: #1976d2;
   color: #fff;
@@ -135,11 +135,11 @@
 
 .map-btn:hover {
   background: #1b5e20;
-}
+} */
 /* =========================
    MOBILE RESPONSIVE (IMPORTANT)
 ========================= */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
 
   .orders-table thead {
     display: none;
@@ -188,22 +188,21 @@
   .map-btn {
     margin-top: 6px;
   }
-}
+} */
 
 /* =========================
    ACTION BUTTONS – CLEAN UI
    ========================= */
 
-.action-buttons {
+/* .action-buttons {
   display: flex;
   gap: 8px;
-  flex-wrap: nowrap;              /* 🔥 small screen wrap */
+  flex-wrap: nowrap;              
   justify-content: flex-start;
   align-items: center;
   flex-direction: row; 
 }
 
-/* COMMON BUTTON STYLE */
 .action-buttons button{
   padding: 6px 12px;
   font-size: 13px;
@@ -214,7 +213,6 @@
   white-space: nowrap;
 }
 
-/* VERIFY */
 .verify-btn {
   background: #1976d2;
   color: #fff;
@@ -223,7 +221,7 @@
   background: #125aa3;
 }
 
-/* UPDATE PAYMENT */
+
 .pay-btn {
   background: #6a1b9a;
   color: #fff;
@@ -231,8 +229,7 @@
 .pay-btn:hover {
   background: #4a1370;
 }
-
-/* INVOICE */
+ 
 .invoice-btn {
   background: #2e7d32;
   color: #fff;
@@ -241,7 +238,6 @@
   background: #1b5e20;
 }
 
-/* DELETE */
 .delete-btn {
   background: #d32f2f;
   color: #fff;
@@ -250,9 +246,7 @@
   background: #9a0007;
 }
 
-/* =========================
-   TABLET (≤1024px)
-   ========================= */
+
 @media (max-width: 1024px) {
   .action-buttons {
     gap: 6px;
@@ -264,30 +258,26 @@
   }
 }
 
-/* =========================
-   MOBILE (≤768px)
-   ========================= */
+
 @media (max-width: 768px) {
   .action-buttons {
-    flex-direction: column;     /* 🔥 vertical stack */
+    flex-direction: column;     
     align-items: stretch;
   }
 
   .action-buttons button {
-    width: 100%;                /* 🔥 full width */
+    width: 100%;                
     text-align: center;
   }
 }
 
-/* =========================
-   SMALL MOBILE (≤480px)
-   ========================= */
+
 @media (max-width: 480px) {
   .action-buttons button {
     font-size: 12px;
     padding: 8px;
   }
-}
+} */
 
 
 .modal-backdrop {
@@ -351,4 +341,272 @@
 #next-logo{
   display: none !important;
   visibility: hidden !important;
+}
+
+
+.sep{
+  display: flex;
+  justify-content: space-between;
+  padding: 30px;
+  align-items: center;
+}
+.border-path-toast {
+  position: relative;
+  background: #fff;
+  color: #111;
+
+  --b: 3px;
+  --r: 0px;
+  --g: #22c55e;
+
+  border-radius: 0 !important;
+  padding: 14px 18px;
+  min-width: 340px;
+  max-width: 420px;
+
+  font-size: 14px;
+  overflow: hidden;
+}
+
+.border-path-toast::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 0 !important;
+  pointer-events: none;
+  padding: var(--b);
+
+  /* 🔥 EXPLICIT POSITIONS — THIS IS THE FIX */
+  background:
+    linear-gradient(var(--g) 0 0) top left     / 0% var(--b) no-repeat,   /* TOP */
+    linear-gradient(var(--g) 0 0) top right    / var(--b) 0% no-repeat,   /* RIGHT */
+    linear-gradient(var(--g) 0 0) bottom right / 0% var(--b) no-repeat,   /* BOTTOM */
+    linear-gradient(var(--g) 0 0) bottom left  / var(--b) 0% no-repeat;   /* LEFT */
+
+  /* cut center, keep only border */
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+
+  animation: borderRun 4s linear forwards;
+}
+
+/* 🔥 EXACT PATH CONTROL */
+@keyframes borderRun {
+  /* start at TOP-LEFT */
+  0% {
+    background-size:
+      0% var(--b),
+      var(--b) 0%,
+      0% var(--b),
+      var(--b) 0%;
+  }
+
+  /* TOP-LEFT → TOP-RIGHT */
+  25% {
+    background-size:
+      100% var(--b),
+      var(--b) 0%,
+      0% var(--b),
+      var(--b) 0%;
+  }
+
+  /* TOP-RIGHT → BOTTOM-RIGHT */
+  50% {
+    background-size:
+      100% var(--b),
+      var(--b) 100%,
+      0% var(--b),
+      var(--b) 0%;
+  }
+
+  /* BOTTOM-RIGHT → BOTTOM-LEFT */
+  75% {
+    background-size:
+      100% var(--b),
+      var(--b) 100%,
+      100% var(--b),
+      var(--b) 0%;
+  }
+
+  /* BOTTOM-LEFT → TOP-LEFT (finish) */
+  100% {
+    background-size:
+      100% var(--b),
+      var(--b) 100%,
+      100% var(--b),
+      var(--b) 100%;
+  }
+}
+@media (max-width: 480px) {
+  .border-path-toast {
+    width: calc(100vw - 24px);
+    min-width: auto;
+    max-width: none;
+
+    padding: 12px 14px;
+    font-size: 13px;
+
+    --b: 2px;
+    --r: 0px;
+    border-radius: 0 !important;
+  }
+}
+@media (max-width: 768px) {
+  .border-path-toast {
+    min-width: 280px;
+    max-width: 360px;
+
+    font-size: 13.5px;
+
+    --b: 2.5px;
+    --r: 0px;
+    border-radius: 0 !important;
+  }
+}
+@media (min-width: 1200px) {
+  .border-path-toast {
+    min-width: 380px;
+    max-width: 480px;
+
+    font-size: 15px;
+
+    --b: 3.5px;
+    --r: 0px;
+    border-radius: 0 !important;
+  }
+}
+
+
+
+      /* save failed */
+.border-path-toast1 {
+  position: relative;
+  background: #fff;
+  color: #111;
+
+  --b: 3px;
+  --r: 0px;
+  --c: #f11313;
+
+  border-radius: 0 !important;
+  padding: 14px 18px;
+  min-width: 340px;
+  max-width: 420px;
+
+  font-size: 14px;
+  overflow: hidden;
+}
+
+.border-path-toast1::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 0 !important;
+  pointer-events: none;
+  padding: var(--b);
+
+  /* 🔥 EXPLICIT POSITIONS — THIS IS THE FIX */
+  background:
+    linear-gradient(var(--c) 0 0) top left     / 0% var(--b) no-repeat,   /* TOP */
+    linear-gradient(var(--c) 0 0) top right    / var(--b) 0% no-repeat,   /* RIGHT */
+    linear-gradient(var(--c) 0 0) bottom right / 0% var(--b) no-repeat,   /* BOTTOM */
+    linear-gradient(var(--c) 0 0) bottom left  / var(--b) 0% no-repeat;   /* LEFT */
+
+  /* cut center, keep only border */
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+
+  animation: borderRun 4s linear forwards;
+}
+
+/* 🔥 EXACT PATH CONTROL */
+@keyframes borderRun {
+  /* start at TOP-LEFT */
+  0% {
+    background-size:
+      0% var(--b),
+      var(--b) 0%,
+      0% var(--b),
+      var(--b) 0%;
+  }
+
+  /* TOP-LEFT → TOP-RIGHT */
+  25% {
+    background-size:
+      100% var(--b),
+      var(--b) 0%,
+      0% var(--b),
+      var(--b) 0%;
+  }
+
+  /* TOP-RIGHT → BOTTOM-RIGHT */
+  50% {
+    background-size:
+      100% var(--b),
+      var(--b) 100%,
+      0% var(--b),
+      var(--b) 0%;
+  }
+
+  /* BOTTOM-RIGHT → BOTTOM-LEFT */
+  75% {
+    background-size:
+      100% var(--b),
+      var(--b) 100%,
+      100% var(--b),
+      var(--b) 0%;
+  }
+
+  /* BOTTOM-LEFT → TOP-LEFT (finish) */
+  100% {
+    background-size:
+      100% var(--b),
+      var(--b) 100%,
+      100% var(--b),
+      var(--b) 100%;
+  }
+}
+@media (max-width: 480px) {
+  .border-path-toast1 {
+    width: calc(100vw - 24px);
+    min-width: auto;
+    max-width: none;
+
+    padding: 12px 14px;
+    font-size: 13px;
+
+    --b: 2px;
+    --r: 0px;
+    border-radius: 0 !important;
+  }
+}
+@media (max-width: 768px) {
+  .border-path-toast1 {
+    min-width: 280px;
+    max-width: 360px;
+
+    font-size: 13.5px;
+
+    --b: 2.5px;
+    --r: 0px;
+    border-radius: 0 !important;
+  }
+}
+@media (min-width: 1200px) {
+  .border-path-toast1 {
+    min-width: 380px;
+    max-width: 480px;
+
+    font-size: 15px;
+
+    --b: 3.5px;
+    --r: 0px;
+    border-radius: 0 !important;
+  }
 }

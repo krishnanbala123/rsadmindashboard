@@ -131,14 +131,33 @@ export default function InvoicePDF({ order }) {
             <Text style={[styles.cell, styles.amt]}>Amount</Text>
           </View>
 
-          <View style={styles.row}>
-            <Text style={[styles.cell, styles.type]}>{order.type}</Text>
+          {/* <View style={styles.row}>
+            <Text style={[styles.cell, styles.type]}>{order.items?.[0]?.type}</Text>
             <Text style={[styles.cell, styles.qty]}>{order.noOfBricks}</Text>
             <Text style={[styles.cell, styles.rate]}>₹{order.brickRate}</Text>
             <Text style={[styles.cell, styles.amt]}>
               ₹{order.totalAmount}
             </Text>
-          </View>
+          </View> */}
+
+<View style={styles.row}>
+  <Text style={[styles.cell, styles.type]}>
+    {order.items?.[0]?.type || '-'}
+  </Text>
+
+  <Text style={[styles.cell, styles.qty]}>
+    {order.items?.[0]?.quantity || 0}
+  </Text>
+
+  <Text style={[styles.cell, styles.rate]}>
+    ₹{order.items?.[0]?.rate || 0}
+  </Text>
+
+  <Text style={[styles.cell, styles.amt]}>
+    ₹{order.totalAmount || 0}
+  </Text>
+</View>
+
         </View>
 
         {/* TOTALS */}

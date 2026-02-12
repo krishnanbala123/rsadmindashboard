@@ -1,29 +1,92 @@
+
 // 'use client';
+
 // import { useState } from 'react';
 // import './login.css';
-// import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+// import {
+//   signInWithEmailAndPassword,
+//   GoogleAuthProvider,
+//   signInWithPopup
+// } from 'firebase/auth';
 // import { auth } from '@/lib/firebase';
 // import { useRouter } from 'next/navigation';
+
+// const ADMIN_EMAIL = process.env.NEXT_PUBLIC_ADMIN_EMAIL;
 
 // export default function LoginPage() {
 //   const [email, setEmail] = useState('');
 //   const [password, setPassword] = useState('');
 //   const router = useRouter();
 
+//   // 🔐 EMAIL + PASSWORD LOGIN
 //   const handleLogin = async () => {
 //     try {
-//       await signInWithEmailAndPassword(auth, email, password);
+//       const res = await signInWithEmailAndPassword(
+//         auth,
+//         email,
+//         password
+//       );
+
+//       const user = res.user;
+
+//       // ❌ ADMIN CHECK
+//       if (user.email !== ADMIN_EMAIL) {
+//         alert('Access denied. Admin only!');
+//         await auth.signOut();
+//         return;
+//       }
+
+//       // ✅ SAVE USER IN DB
+//       await fetch('/api/users/save', {
+//         method: 'POST',
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify({
+//           uid: user.uid,
+//           email: user.email,
+//           name: user.displayName || 'Admin',
+//           photoURL: user.photoURL || '',
+//           role: 'admin'
+//         })
+//       });
+
+//       // ✅ STORE EMAIL FOR ADMIN GUARD
+//       localStorage.setItem('userEmail', user.email);
+
 //       router.push('/admin/dashboard');
 //     } catch (error) {
 //       alert(error.message);
 //     }
 //   };
 
+//   // 🔐 GOOGLE LOGIN
 //   const handleGoogleLogin = async () => {
 //     try {
 //       const provider = new GoogleAuthProvider();
-//       await signInWithPopup(auth, provider);
-//       console.log()
+//       const res = await signInWithPopup(auth, provider);
+//       const user = res.user;
+
+//       // ❌ ADMIN CHECK
+//       if (user.email !== ADMIN_EMAIL) {
+//         alert('Access denied. Admin only!');
+//         await auth.signOut();
+//         return;
+//       }
+
+//       // ✅ SAVE USER IN DB
+//       await fetch('/api/users/save', {
+//         method: 'POST',
+//         headers: { 'Content-Type': 'application/json' },
+//         body: JSON.stringify({
+//           uid: user.uid,
+//           email: user.email,
+//           name: user.displayName || 'Admin',
+//           photoURL: user.photoURL || '',
+//           role: 'admin'
+//         })
+//       });
+
+//       localStorage.setItem('userEmail', user.email);
+
 //       router.push('/admin/dashboard');
 //     } catch (error) {
 //       alert(error.message);
@@ -35,9 +98,9 @@
 //       <div className="login-card">
 //         <h2>RS Bricks Admin</h2>
 
-//         <input
+//         {/* <input
 //           type="email"
-//           placeholder="Email"
+//           placeholder="Admin Email"
 //           className="input"
 //           value={email}
 //           autoComplete="off"
@@ -57,7 +120,7 @@
 //           Login
 //         </button>
 
-//         <div className="divider">OR</div>
+//         <div className="divider">OR</div> */}
 
 //         <button className="google-btn" onClick={handleGoogleLogin}>
 //           Sign in with Google
@@ -67,10 +130,12 @@
 //   );
 // }
 
+
 'use client';
 
 import { useState } from 'react';
 import './login.css';
+import toast from 'react-hot-toast';
 import {
   signInWithEmailAndPassword,
   GoogleAuthProvider,
@@ -99,7 +164,12 @@ export default function LoginPage() {
 
       // ❌ ADMIN CHECK
       if (user.email !== ADMIN_EMAIL) {
-        alert('Access denied. Admin only!');
+        toast.error('Access denied. Admin only ❌', 
+                  {
+    className: `border-path-toast1 run-${Date.now()}`, // 👈 key trick
+    duration: 4000,
+  }
+        );
         await auth.signOut();
         return;
       }
@@ -117,12 +187,23 @@ export default function LoginPage() {
         })
       });
 
-      // ✅ STORE EMAIL FOR ADMIN GUARD
       localStorage.setItem('userEmail', user.email);
+
+      toast.success('Login successful ✅',
+            {
+    className: `border-path-toast run-${Date.now()}`, // 👈 key trick
+    duration: 4000,
+  }
+      );
 
       router.push('/admin/dashboard');
     } catch (error) {
-      alert(error.message);
+      toast.error(error.message || 'Login failed ❌',
+                {
+    className: `border-path-toast1 run-${Date.now()}`, // 👈 key trick
+    duration: 4000,
+  }
+      );
     }
   };
 
@@ -135,7 +216,12 @@ export default function LoginPage() {
 
       // ❌ ADMIN CHECK
       if (user.email !== ADMIN_EMAIL) {
-        alert('Access denied. Admin only!');
+        toast.error('Access denied. Admin only ❌',
+                  {
+    className: `border-path-toast1 run-${Date.now()}`, // 👈 key trick
+    duration: 4000,
+  }
+        );
         await auth.signOut();
         return;
       }
@@ -155,9 +241,21 @@ export default function LoginPage() {
 
       localStorage.setItem('userEmail', user.email);
 
+      toast.success('Google login successful ✅',
+            {
+    className: `border-path-toast run-${Date.now()}`, // 👈 key trick
+    duration: 4000,
+  }
+      );
+
       router.push('/admin/dashboard');
     } catch (error) {
-      alert(error.message);
+      toast.error(error.message || 'Google login failed ❌',
+                {
+    className: `border-path-toast1 run-${Date.now()}`, // 👈 key trick
+    duration: 4000,
+  }
+      );
     }
   };
 
@@ -166,12 +264,13 @@ export default function LoginPage() {
       <div className="login-card">
         <h2>RS Bricks Admin</h2>
 
-        {/* <input
+        {/* EMAIL LOGIN (optional – commented) */}
+        {/*
+        <input
           type="email"
           placeholder="Admin Email"
           className="input"
           value={email}
-          autoComplete="off"
           onChange={(e) => setEmail(e.target.value)}
         />
 
@@ -180,7 +279,6 @@ export default function LoginPage() {
           placeholder="Password"
           className="input"
           value={password}
-          autoComplete="new-password"
           onChange={(e) => setPassword(e.target.value)}
         />
 
@@ -188,8 +286,10 @@ export default function LoginPage() {
           Login
         </button>
 
-        <div className="divider">OR</div> */}
+        <div className="divider">OR</div>
+        */}
 
+        {/* GOOGLE LOGIN */}
         <button className="google-btn" onClick={handleGoogleLogin}>
           Sign in with Google
         </button>
@@ -197,4 +297,3 @@ export default function LoginPage() {
     </div>
   );
 }
-

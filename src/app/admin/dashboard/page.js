@@ -177,6 +177,9 @@
 'use client';
 import { useEffect, useState } from 'react';
 import './dashboard.css';
+import Paper from '@mui/material/Paper';
+import { DataGrid } from '@mui/x-data-grid';
+import Chip from '@mui/material/Chip';
 
 export default function DashboardPage() {
   const [stats, setStats] = useState({
@@ -318,7 +321,7 @@ useEffect(() => {
       </div>
 
       {/* RECENT ORDERS */}
-      <div className="recent-orders">
+      {/* <div className="recent-orders">
         <h3>Recent Orders (Latest 5)</h3>
 
         {recentOrders.length === 0 ? (
@@ -365,7 +368,135 @@ useEffect(() => {
 
           </table>
         )}
-      </div>
+      </div> */}
+
+
+      {/* <div className="recent-orders">
+  <h3>Recent Orders (Latest 5)</h3>
+
+  {recentOrders.length === 0 ? (
+    <p>No orders yet</p>
+  ) : (
+    <Paper sx={{ height: 400, width: '100%' }}>
+      <DataGrid
+        rows={recentOrders.map((order) => ({
+          id: order._id,
+          orderId: order.orderId,
+          name: order.name,
+          phone: order.phone,
+          date: new Date(order.createdAt).toLocaleDateString(),
+          paidAmount: order.paidAmount,
+          paymentStatus: order.paymentStatus,
+        }))}
+       columns={[
+  { field: 'orderId', headerName: 'Order ID', flex: 1 },
+  { field: 'name', headerName: 'Name', flex: 1 },
+  { field: 'phone', headerName: 'Phone', flex: 1 },
+  { field: 'date', headerName: 'Date', flex: 1 },
+  {
+    field: 'paidAmount',
+    headerName: 'Paid',
+    flex: 1,
+    renderCell: (params) => `₹${params.value}`,
+  },
+  {
+    field: 'paymentStatus',
+    headerName: 'Status',
+    flex: 1,
+    renderCell: (params) =>
+      params.value === 'completed'
+        ? <Chip label="Completed" color="success" />
+        : <Chip label="Pending" color="warning" />,
+  },
+]}
+
+        pageSizeOptions={[5]}
+        initialState={{
+          pagination: { paginationModel: { pageSize: 5, page: 0 } },
+        }}
+        disableRowSelectionOnClick
+        sx={{ border: 0 }}
+      />
+    </Paper>
+  )}
+</div> */}
+
+<div className="recent-orders">
+  <h3>Recent Orders (Latest 5)</h3>
+
+  {recentOrders.length === 0 ? (
+    <p>No orders yet</p>
+  ) : (
+    <Paper sx={{ width: '100%', borderRadius: 3 }}>
+      <DataGrid
+        autoHeight
+        getRowHeight={() => 65}
+
+        rows={recentOrders.map((order) => ({
+          id: order._id,
+          orderId: order.orderId,
+          name: order.name,
+          phone: order.phone,
+          date: new Date(order.createdAt).toLocaleDateString(),
+          paidAmount: order.paidAmount,
+          paymentStatus: order.paymentStatus,
+        }))}
+
+        columns={[
+          { field: 'orderId', headerName: 'Order ID', flex: 1, minWidth: 140 },
+          { field: 'name', headerName: 'Name', flex: 1, minWidth: 150 },
+          { field: 'phone', headerName: 'Phone', flex: 1, minWidth: 140 },
+          { field: 'date', headerName: 'Date', flex: 1, minWidth: 130 },
+          {
+            field: 'paidAmount',
+            headerName: 'Paid',
+            flex: 1,
+            minWidth: 120,
+            renderCell: (params) => `₹${params.value}`,
+          },
+          {
+            field: 'paymentStatus',
+            headerName: 'Status',
+            flex: 1,
+            minWidth: 140,
+            renderCell: (params) =>
+              params.value === 'completed'
+                ? <Chip label="Completed" color="success" size="small" />
+                : <Chip label="Pending" color="warning" size="small" />,
+          },
+        ]}
+
+        pageSizeOptions={[5]}
+        initialState={{
+          pagination: { paginationModel: { pageSize: 5, page: 0 } },
+        }}
+
+        disableRowSelectionOnClick
+
+        sx={{
+          border: 0,
+
+          '& .MuiDataGrid-columnHeaders': {
+            backgroundColor: '#f8f9fa',
+            fontWeight: 600,
+          },
+
+          '& .MuiDataGrid-cell': {
+            display: 'flex',
+            alignItems: 'center',
+            padding: '0 12px',
+          },
+
+          '& .MuiDataGrid-columnSeparator': {
+            display: 'none',
+          },
+        }}
+      />
+    </Paper>
+  )}
+</div>
+
+
 
 {/* <div className='recent-orders'>
 <h3>Recent User Logins</h3>

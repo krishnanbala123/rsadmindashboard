@@ -8,7 +8,7 @@ export async function GET() {
 
     const users = await User.find()
       .sort({ lastLogin: -1 })
-      .select('name email phone role lastLogin createdAt');
+      .select('name email phone role lastLogin createdAt updatedAt');
 
     return NextResponse.json(users);
 

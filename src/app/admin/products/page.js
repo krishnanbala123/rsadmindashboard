@@ -319,6 +319,11 @@
 import { useEffect, useState } from 'react';
 import AddProductDrawer from './AddProductDrawer';
 import './products.css';
+import { DataGrid } from '@mui/x-data-grid';
+import Paper from '@mui/material/Paper';
+import Chip from '@mui/material/Chip';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
 
 export default function ProductsPage() {
   const [products, setProducts] = useState([]);
@@ -393,7 +398,7 @@ export default function ProductsPage() {
       </div>
 
       {/* 📋 TABLE */}
-      <table className="products-table">
+      {/* <table className="products-table">
         <thead>
           <tr>
             <th>Image</th>
@@ -460,7 +465,296 @@ export default function ProductsPage() {
             );
           })}
         </tbody>
-      </table>
+      </table> */}
+{/* <Paper sx={{ height: 600, width: '100%', borderRadius: 3 }}>
+  <DataGrid
+    getRowHeight={() => 90}   // ✅ Important (force row height)
+
+    rows={products.map((p) => ({
+      id: p._id,
+      image: p.image?.url,
+      name: p.name,
+      shortDescription: p.shortDescription,
+      type: p.type,
+      price: p.price,
+      stock: p.stock,
+      fullProduct: p,
+    }))}
+
+    columns={[
+      {
+        field: 'image',
+        headerName: 'Image',
+        width: 130,
+        sortable: false,
+        renderCell: (params) => (
+          <div
+            style={{
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <img
+              src={params.value}
+              alt="product"
+              style={{
+                width: 65,
+                height: 65,
+                objectFit: 'cover',
+                borderRadius: 8,
+              }}
+            />
+          </div>
+        ),
+      },
+
+      { field: 'name', headerName: 'Name', flex: 1 },
+
+      {
+        field: 'shortDescription',
+        headerName: 'Description',
+        flex: 1.5,
+        renderCell: (params) => params.value || '—',
+      },
+
+      { field: 'type', headerName: 'Type', flex: 1 },
+
+      {
+        field: 'price',
+        headerName: 'Price',
+        flex: 1,
+        renderCell: (params) => `₹${params.value}`,
+      },
+
+      { field: 'stock', headerName: 'Stock', flex: 1 },
+
+      {
+        field: 'status',
+        headerName: 'Status',
+        flex: 1,
+        renderCell: (params) =>
+          params.row.stock >= 2000 ? (
+            <Chip label="In Stock" color="success" />
+          ) : (
+            <Chip label="Out of Stock" color="error" />
+          ),
+      },
+
+      {
+        field: 'actions',
+        headerName: 'Actions',
+        flex: 1.4,
+        sortable: false,
+        renderCell: (params) => {
+          const product = params.row.fullProduct;
+
+          return (
+            <div
+              style={{
+                width: '100%',
+                height: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 8,
+              }}
+            >
+              <Button
+                size="small"
+                variant="contained"
+                onClick={() => openEdit(product)}
+              >
+                Edit
+              </Button>
+
+              <Button
+                size="small"
+                variant="contained"
+                color="error"
+                onClick={() => handleDelete(product)}
+              >
+                Delete
+              </Button>
+            </div>
+          );
+        },
+      },
+    ]}
+
+    pageSizeOptions={[5, 10]}
+    initialState={{
+      pagination: { paginationModel: { pageSize: 5, page: 0 } },
+    }}
+
+    disableRowSelectionOnClick
+
+    sx={{
+      border: 0,
+
+      '& .MuiDataGrid-columnHeaders': {
+        backgroundColor: '#f8f9fa',
+        fontWeight: 600,
+      },
+
+      '& .MuiDataGrid-columnSeparator': {
+        display: 'none',
+      },
+    }}
+  />
+</Paper> */}
+<Paper sx={{ width: '100%', borderRadius: 3 }}>
+  <DataGrid
+    autoHeight
+    getRowHeight={() => 90}
+
+    rows={products.map((p) => ({
+      id: p._id,
+      image: p.image?.url,
+      name: p.name,
+      shortDescription: p.shortDescription,
+      type: p.type,
+      price: p.price,
+      stock: p.stock,
+      fullProduct: p,
+    }))}
+
+    columns={[
+      {
+        field: 'image',
+        headerName: 'Image',
+        minWidth: 130,
+        sortable: false,
+        renderCell: (params) => (
+          <div
+            style={{
+              width: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            <img
+              src={params.value}
+              alt="product"
+              style={{
+                width: 65,
+                height: 65,
+                objectFit: 'cover',
+                borderRadius: 8,
+              }}
+            />
+          </div>
+        ),
+      },
+
+      { field: 'name', headerName: 'Name', flex: 1, minWidth: 160 },
+
+      {
+        field: 'shortDescription',
+        headerName: 'Description',
+        flex: 1.5,
+        minWidth: 220,
+        renderCell: (params) => params.value || '—',
+      },
+
+      { field: 'type', headerName: 'Type', flex: 1, minWidth: 140 },
+
+      {
+        field: 'price',
+        headerName: 'Price',
+        flex: 1,
+        minWidth: 120,
+        renderCell: (params) => `₹${params.value}`,
+      },
+
+      { field: 'stock', headerName: 'Stock', flex: 1, minWidth: 120 },
+
+      {
+        field: 'status',
+        headerName: 'Status',
+        flex: 1,
+        minWidth: 160,
+        renderCell: (params) =>
+          params.row.stock >= 2000 ? (
+            <Chip label="In Stock" color="success" />
+          ) : (
+            <Chip label="Out of Stock" color="error" />
+          ),
+      },
+
+      {
+        field: 'actions',
+        headerName: 'Actions',
+        minWidth: 200,
+        sortable: false,
+        renderCell: (params) => {
+          const product = params.row.fullProduct;
+
+          return (
+            <div
+              style={{
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 8,
+              }}
+            >
+              <Button
+                size="small"
+                variant="contained"
+                onClick={() => openEdit(product)}
+              >
+                Edit
+              </Button>
+
+              <Button
+                size="small"
+                variant="contained"
+                color="error"
+                onClick={() => handleDelete(product)}
+              >
+                Delete
+              </Button>
+            </div>
+          );
+        },
+      },
+    ]}
+
+    pageSizeOptions={[5, 10]}
+    initialState={{
+      pagination: { paginationModel: { pageSize: 5, page: 0 } },
+    }}
+
+    disableRowSelectionOnClick
+
+    sx={{
+      border: 0,
+
+      '& .MuiDataGrid-columnHeaders': {
+        backgroundColor: '#f8f9fa',
+        fontWeight: 600,
+      },
+
+      '& .MuiDataGrid-cell': {
+        display: 'flex',
+        alignItems: 'center',
+        padding: '0 16px',
+      },
+
+      '& .MuiDataGrid-columnSeparator': {
+        display: 'none',
+      },
+    }}
+  />
+</Paper>
+
+
+
 
       {/* ➕ ADD / ✏️ EDIT DRAWER */}
       <AddProductDrawer

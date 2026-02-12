@@ -2,6 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import './users.css';
+import { DataGrid } from '@mui/x-data-grid';
+import Paper from '@mui/material/Paper';
+import Chip from '@mui/material/Chip';
+
 
 export default function UserLoginsPage() {
   const [users, setUsers] = useState([]);
@@ -17,7 +21,9 @@ export default function UserLoginsPage() {
 
   // 🔍 FILTER LOGIC
   const filteredUsers = users.filter(u => {
-    const date = new Date(u.lastLogin);
+    console.log(u);
+    
+    const date = new Date(u.updatedAt);
 
     const searchMatch = search
       ? (u.email?.includes(search) )
@@ -70,13 +76,13 @@ export default function UserLoginsPage() {
       </div>
 
       {/* TABLE */}
-      <div className="table-wrapper">
+      {/* <div className="table-wrapper">
         <table>
           <thead>
             <tr>
               <th>Name</th>
               <th>Email</th>
-              {/* <th>Phone</th> */}
+             
               <th>Role</th>
               <th>Last Login</th>
             </tr>
@@ -93,17 +99,96 @@ export default function UserLoginsPage() {
               <tr key={u._id}>
                 <td>{u.name || '-'}</td>
                 <td>{u.email}</td>
-                {/* <td>{u.phone || '-'}</td> */}
+               
                 <td>{u.role}</td>
                 <td>
-                  {new Date(u.lastLogin).toLocaleString()}
+                  {new Date(u.updatedAt).toLocaleString()}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-      </div>
+      </div> */}
+
+
+<div style={{ width: '100%', overflowX: 'auto' }}>
+  <Paper sx={{ minWidth: 750, borderRadius: 3 }}>
+    <DataGrid
+      autoHeight
+      // rows={filteredUsers.map((u) => ({
+      //   id: u._id,
+      //   name: u.name || '-',
+      //   email: u.email,
+      //   role: u.role,
+      //   updatedAt: new Date(u.updatedAt).toLocaleString(),
+      // }))}
+      rows={filteredUsers.map((u) => ({
+  id: u._id,
+  name: u.name || '-',
+  email: u.email,
+  role: u.role,
+  updatedAt: u.updatedAt
+    ? new Date(u.updatedAt).toLocaleString('en-IN', {
+        dateStyle: 'medium',
+        timeStyle: 'short',
+      })
+    : '-',
+}))}
+
+      columns={[
+        { field: 'name', headerName: 'Name', flex: 1, minWidth: 150 },
+        { field: 'email', headerName: 'Email', flex: 1.5, minWidth: 200 },
+        {
+          field: 'role',
+          headerName: 'Role',
+          flex: 1,
+          minWidth: 130,
+          renderCell: (params) =>
+            params.value === 'admin' ? (
+              <Chip label="Admin" color="primary" />
+            ) : (
+              <Chip label="User" color="default" />
+            ),
+        },
+        {
+          field: 'updatedAt',
+          headerName: 'Last Login',
+          flex: 1.5,
+          minWidth: 200,
+        },
+      ]}
+
+      pageSizeOptions={[5, 10, 20]}
+      initialState={{
+        pagination: { paginationModel: { pageSize: 5, page: 0 } },
+      }}
+
+      disableRowSelectionOnClick
+      getRowHeight={() => 70}
+
+      sx={{
+        border: 0,
+
+        '& .MuiDataGrid-columnHeaders': {
+          backgroundColor: '#f8f9fa',
+          fontWeight: 600,
+        },
+
+        '& .MuiDataGrid-cell': {
+          display: 'flex',
+          alignItems: 'center',
+          padding: '0 16px',
+        },
+
+        '& .MuiDataGrid-columnSeparator': {
+          display: 'none',
+        },
+      }}
+    />
+  </Paper>
+</div>
 
     </div>
   );
 }
+ 
