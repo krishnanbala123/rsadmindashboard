@@ -117,7 +117,7 @@ export default function InvoicePDF({ order }) {
         {/* 🔝 HEADER */}
         <View style={styles.header}>
           <Image
-            src="/bricks-logo.PNG"   // 🔥 put logo in /public/logo.png
+            src="/brickslogo.png"   // 🔥 put logo in /public/logo.png
             style={styles.logo}
           />
 
