@@ -24,7 +24,7 @@ export default function AdminSidebar({
       {/* 🔥 BRAND LOGO */}
       <div className="sidebar-brand">
         <img
-          src="/brickslogo.png"
+          src="/bricks-logo.png"
           alt="RS Bricks"
           width={collapsed ? 36 : 120}
           height={80}
