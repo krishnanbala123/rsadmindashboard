@@ -1,6 +1,5 @@
 'use client';
 import Link from 'next/link';
-import Image from 'next/image';
 import { MdDashboard, MdInventory, MdShoppingCart, MdHistory, MdPeople } from 'react-icons/md';
 
 export default function AdminSidebar({
@@ -24,12 +23,11 @@ export default function AdminSidebar({
     >
       {/* 🔥 BRAND LOGO */}
       <div className="sidebar-brand">
-        <Image
+        <img
           src="/brickslogo.png"
           alt="RS Bricks"
           width={collapsed ? 36 : 120}
           height={80}
-          priority
         />
       </div>
 
