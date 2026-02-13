@@ -431,14 +431,16 @@ export default function OrdersPage() {
       );
 
     // WhatsApp message
+    const item = updated.items?.[0];
     const msg = `
  RS Bricks-Nellai’s Leading Brick Manufacturer & Supplier
 
 Hello ${order.name},
 Your order (${order.orderId}) has been VERIFIED.
 
-Bricks: ${updated.noOfBricks}
-Rate: ₹${updated.brickRate}
+Brick Type: ${item?.type || '-'}
+Bricks: ${item?.quantity || 0}
+Rate: ₹${item?.rate || 0}
 Total: ₹${updated.totalAmount}
 Paid: ₹${updated.paidAmount}
 Balance: ₹${updated.remainingAmount}
