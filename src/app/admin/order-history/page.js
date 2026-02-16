@@ -93,42 +93,6 @@ export default function OrderHistoryPage() {
       <div className="month-total">
         Monthly Total : <b>₹{monthlyTotal}</b>
       </div>
-
-      {/* 📋 TABLE */}
-      {/* <div className="table-wrapper">
-        <table className="history-table">
-          <thead>
-            <tr>
-              <th>Order ID</th>
-              <th>Name</th>
-              <th>Phone</th>
-              <th>Total</th>
-              <th>Completed At</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {filteredOrders.length === 0 && (
-              <tr>
-                <td colSpan="5">No history found</td>
-              </tr>
-            )}
-
-            {filteredOrders.map(o => (
-              <tr key={o._id}>
-                <td data-label="Order ID">{o.orderId}</td>
-                <td data-label="Name">{o.name}</td>
-                <td data-label="Phone">{o.phone}</td>
-                <td data-label="Total">₹{o.totalAmount}</td>
-                <td data-label="Completed At">
-                  {new Date(o.updatedAt).toLocaleDateString()}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div> */}
-
 {/* <div className="table-wrapper">
   <Paper sx={{ height: 500, width: '100%', borderRadius: 3 }}>
     <DataGrid

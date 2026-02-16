@@ -44,6 +44,11 @@ const OrderSchema = new mongoose.Schema(
       required: true
     },
 
+    delAmount: {
+      type: Number,
+      default: 0
+    },
+
     totalAmount: {
       type: Number,
       required: true
